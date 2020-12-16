@@ -13,6 +13,7 @@ Which was started with the [Spring Initializr](https://start.spring.io/) with th
 
 # 2020-12-16
 Today's goal is to go fancy and somehow tie a kotlinJS react application to the Mustache Engine of the Spring Framework.
+Actually I'll try to deep dive in the Spring Framework.
 
 # 2020-12-15
 Today's goal is to initialize the project and commit the initial commit.
