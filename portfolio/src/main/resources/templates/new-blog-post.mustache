@@ -1,0 +1,40 @@
+{{> header}}
+<h1>{{title}}</h1>
+<h2>{{#add}}Create new Article:{{/add}}{{^add}}Edit Article:{{/add}}</h2>
+<a href="/articles">Back to Article List</a>
+<br/><br/>
+{{#article}}
+    <form action="{{#add}}/new-article{{/add}}{{^add}}/articles/{{id}}/edit{{/add}}" name="article" method="POST">
+        <table border="0">
+            {{#id}}
+                <tr>
+                    <td>ID</td>
+                    <td>:</td>
+                    <td>{{id}}</td>
+                </tr>
+            {{/id}}
+            <tr>
+                <td>Title</td>
+                <td>:</td>
+                <td><input type="text" name="title" value="{{#title}}{{title}}{{/title}}"/></td>
+            </tr>
+            <tr>
+                <td>HeadLine</td>
+                <td>:</td>
+                <td><input type="text" name="headline" value="{{#headline}}{{headline}}{{/headline}}"/></td>
+            </tr>
+            <tr>
+                <td>Content</td>
+                <td>:</td>
+                <td><input type="text" name="content" value="{{#content}}{{content}}{{/content}}"/></td>
+            </tr>
+        </table>
+        <input type="submit" value="{{#add}}Create{{/add}}{{^add}}Update{{/add}}"/>
+    </form>
+{{/article}}
+
+<br/>
+<!-- Check if errorMessage is not null and not empty -->
+<div class="error">{{#errorMessage}}{{errorMessage}}{{/errorMessage}}</div>
+
+{{> footer}}
