@@ -7,13 +7,19 @@
     {{#banner.title}}
         <section>
             <header class="banner">
-                <h2 class="banner-title">{{banner.title}}</h2>
+                <h2 class="banner-title"> {{banner.title}} </h2>
             </header>
             <div class="banner-content">
                 {{banner.content}}
             </div>
         </section>
     {{/banner.title}}
+
+    <section>
+        <h2> React Goes here </h2>
+        <div id="root"></div>
+        <h2> React Ends here </h2>
+    </section>
 
     {{#articles}}
         <section>
@@ -27,5 +33,5 @@
         </section>
     {{/articles}}
 </div>
-
+<script src="kotlin-react.js"></script>
 {{> footer}}

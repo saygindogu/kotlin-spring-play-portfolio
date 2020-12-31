@@ -40,7 +40,7 @@ class HtmlController(private val repository: ArticleRepository, private val prop
     }
 
 
-    @GetMapping("/new-article")
+    @GetMapping("/blog/new-article")
     fun showAddArticle(model: Model): String {
         println("I AM GROOT")
         val article = Article()
@@ -50,7 +50,7 @@ class HtmlController(private val repository: ArticleRepository, private val prop
         return "new-blog-post"
     }
 
-    @PostMapping("/new-article")
+    @PostMapping("/blog/new-article")
     fun addArticle(
         model: Model,
         @ModelAttribute article: Article

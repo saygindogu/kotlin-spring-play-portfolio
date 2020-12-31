@@ -1,0 +1,32 @@
+version: '3.3'
+
+services:
+  mysql-db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: iotplatform
+      MYSQL_DATABASE: iotplatform
+      MYSQL_USER: iotplatform
+      MYSQL_PASSWORD: iotplatform
+    networks:
+      - spring-boot-mysql-network
+    ports:
+      - "3306:3306"
+  spring:
+    networks:
+      - spring-boot-mysql-network
+    image: portfolio:0.0.1-SNAPSHOT
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+networks:
+  spring-boot-mysql-network:
+    driver: bridge
+
+volumes:
+  db_data: {}

@@ -7,6 +7,7 @@ import javax.persistence.Id
 import javax.persistence.ManyToOne
 
 @Entity
+
 data class Article(
 
     var title: String = "",
