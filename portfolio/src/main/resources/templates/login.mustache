@@ -1,0 +1,25 @@
+{{> header}}
+
+<h3>My Custom Login Page</h3>
+
+
+<p>{{contextPath}}</p>
+<form action="{{contextPath}}/authenticateTheUser"
+           method="POST">
+    <p>
+        User name: <input type="text" name="username" />
+    </p>
+
+    <p>
+        Password: <input type="password" name="password" />
+    </p>
+
+    {{#_csrf}}
+        <input type="hidden" name="{{parameterName}}" value="{{token}}"/>
+    {{/_csrf}}
+
+    <input type="submit" value="Login" />
+
+</form>
+
+{{> footer}}

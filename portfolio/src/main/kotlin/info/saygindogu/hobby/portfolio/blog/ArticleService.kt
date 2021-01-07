@@ -1,22 +1,21 @@
 package info.saygindogu.hobby.portfolio.blog
 
-
+import info.saygindogu.hobby.portfolio.User
+import info.saygindogu.hobby.portfolio.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Service
-import org.springframework.util.StringUtils
-import java.lang.Exception
-import java.util.ArrayList
+import java.util.*
 
 @Service
 class ArticleService {
     @Autowired
-    private val articleRepository: ArticleRepository? = null
+    private var articleRepository: ArticleRepository? = null
 
     @Autowired
-    private val userRepository: UserRepository? = null
+    private var userRepository: UserRepository? = null
 
     private fun existsById(id: Long): Boolean {
         return articleRepository!!.existsById(id)
@@ -51,9 +50,9 @@ class ArticleService {
             throw Exception("Content is required")
         }
         val author = User(
-            login = "Test",
-            firstname = "Saygin",
-            lastname = "Dogu",
+            email = "Test",
+            firstName = "Saygin",
+            lastName = "Dogu",
         )
         article.author = userRepository!!.save(author)
         return articleRepository!!.save(article)
@@ -71,9 +70,9 @@ class ArticleService {
             throw Exception("Content is required")
         }
         article.author = User(
-            login = "Test",
-            firstname = "Saygin",
-            lastname = "Dogu",
+            email = "Test",
+            firstName = "Saygin",
+            lastName = "Dogu",
         )
         articleRepository!!.save<Article>(article)
     }
@@ -90,4 +89,6 @@ class ArticleService {
     fun count(): Long {
         return articleRepository!!.count()
     }
+
+
 }

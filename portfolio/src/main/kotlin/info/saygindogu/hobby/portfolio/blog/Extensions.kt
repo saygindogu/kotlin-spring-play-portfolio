@@ -1,4 +1,4 @@
-package info.saygindogu.hobby.portfolio.blog
+package info.saygindogu.hobby.portfolio
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatterBuilder
