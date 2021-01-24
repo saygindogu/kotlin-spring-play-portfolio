@@ -47,6 +47,7 @@ class SecurityConfiguration : WebSecurityConfigurerAdapter() {
             .and()
             .logout().permitAll()
             .and().exceptionHandling().accessDeniedPage("/access-denied")
+            .and().csrf().ignoringAntMatchers("/api/**")
     }
 
     @Bean

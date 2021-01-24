@@ -5,7 +5,7 @@ import kotlinx.browser.document
 import kotlin.js.Date
 
 fun main() {
-    render(document.getElementById("root")) {
+    render(document.getElementById("blog-application")) {
         child(App::class) {}
     }
 }

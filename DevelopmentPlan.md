@@ -1,0 +1,10 @@
+- Handle the get articles function in the react side
+- Handle auto page reload in react side
+- Handle the file upload stuff in react side
+- Handle the file upload stuff in backend side
+- Add concerts calendar in backend
+- Add concerts frontend
+- Think about the security
+- if necessary add jwt stuff
+- complete the rest apis for crud
+- make pretty

@@ -13,12 +13,7 @@ data class Article(
     var title: String = "",
     var headline: String = "",
     var content: String = "",
-    @ManyToOne var author: User = User(
-        email = "Hebele",
-        firstName = "Hobili",
-        lastName = "Zop",
-        description = "Koyt?"
-    ),
+    @ManyToOne var author: User = User(),
     var slug: String = title.toSlug(),
     var addedAt: LocalDateTime = LocalDateTime.now(),
     @Id @GeneratedValue var id: Long? = null

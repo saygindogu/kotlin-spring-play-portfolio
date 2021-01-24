@@ -51,11 +51,7 @@ class NewArticleForm : RComponent<RProps, NewArticleFormState>() {
 
     fun handleSubmit(event: Event) {
         event.preventDefault();
-        val formData = FormData()
-        formData.append("title", state.title)
-        formData.append("headline", state.headline)
-        formData.append("content", state.content)
-        doRequest<Article>("blog/new-article", "post", formData, null)
+        doRequest<Article>("api/articles/", "post", state, null)
         window.location.href = "localhost:8080"
     }
 

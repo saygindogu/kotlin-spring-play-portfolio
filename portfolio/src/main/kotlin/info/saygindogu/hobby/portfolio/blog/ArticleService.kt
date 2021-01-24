@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.PageRequest
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
+import org.springframework.security.core.Authentication
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -88,6 +89,13 @@ class ArticleService {
 
     fun count(): Long {
         return articleRepository!!.count()
+    }
+
+    fun newArticle(username: String,resource: ArticleResource): ArticleResource {
+        val user = userRepository!!.findByUsername(username) ?: return resource
+        val article = Article(title=resource.title, content=resource.content, headline=resource.headline, author = user)
+        articleRepository!!.save(article)
+        return resource
     }
 
 

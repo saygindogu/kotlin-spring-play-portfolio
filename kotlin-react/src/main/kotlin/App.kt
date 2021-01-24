@@ -34,29 +34,44 @@ suspend fun fetchArticle(id: Int): Article? {
 }
 
 suspend fun fetchArticles(): List<Article> = coroutineScope {
-    (1..3).map { id ->
-        async {
-            fetchArticle(id)
-        }
-    }.awaitAll().mapNotNull { item -> item }
+    val response = window.fetch("http://localhost:8080/api/articles/all")
+        .await()
+    val forOFor: Short = 404
+    if (response.unsafeCast<Response>().status == forOFor) {
+        return null
+    }
+    val json = response.json()
+        .await().unsafeCast<Json>()
+    return Article(
+        author =
+        window.fetch(json["_links"].unsafeCast<Json>()["author"].unsafeCast<Json>()["href"]).await()
+            .json()
+            .await().unsafeCast<User>(),
+        content = json["content"].unsafeCast<String>(),
+        title = json["title"].unsafeCast<String>(),
+        headline = json["headline"].unsafeCast<String>(),
+        slug = json["headline"].unsafeCast<String>(),
+        id = json["id"].unsafeCast<Int>(),
+        addedAt = json["addedAt"].unsafeCast<Date>()
+    )
 }
 
 external interface AppState : RState {
     var currentArticle: Article?
-    var unwatchedArticles: List<Article>
-    var watchedArticles: List<Article>
+    var unreadArticles: List<Article>
+    var readArticles: List<Article>
 }
 
 class App : RComponent<RProps, AppState>() {
     override fun AppState.init() {
-        unwatchedArticles = listOf()
-        watchedArticles = listOf()
+        unreadArticles = listOf()
+        readArticles = listOf()
 
         val mainScope = MainScope()
         mainScope.launch {
             val articles = fetchArticles()
             setState {
-                unwatchedArticles = articles
+                unreadArticles = articles
             }
         }
     }
@@ -71,7 +86,7 @@ class App : RComponent<RProps, AppState>() {
                 +"Articles to read"
             }
             articleList {
-                articles = state.unwatchedArticles
+                articles = state.unreadArticles
                 selectedArticle = state.currentArticle
                 onSelectArticle = { Article ->
                     setState {
@@ -84,7 +99,7 @@ class App : RComponent<RProps, AppState>() {
                 +" Articles read"
             }
             articleList {
-                articles = state.watchedArticles
+                articles = state.readArticles
                 selectedArticle = state.currentArticle
                 onSelectArticle = { Article ->
                     setState {
