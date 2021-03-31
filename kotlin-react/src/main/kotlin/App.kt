@@ -19,41 +19,27 @@ suspend fun fetchArticle(id: Int): Article? {
     }
     val json = response.json()
         .await().unsafeCast<Json>()
-    return Article(
-        author =
-        window.fetch(json["_links"].unsafeCast<Json>()["author"].unsafeCast<Json>()["href"]).await()
-            .json()
-            .await().unsafeCast<User>(),
-        content = json["content"].unsafeCast<String>(),
-        title = json["title"].unsafeCast<String>(),
-        headline = json["headline"].unsafeCast<String>(),
-        slug = json["headline"].unsafeCast<String>(),
-        id = json["id"].unsafeCast<Int>(),
-        addedAt = json["addedAt"].unsafeCast<Date>()
-    )
+    return get_article_from_json(json)
 }
 
+private suspend fun get_article_from_json(json: Json) = Article(
+    author =
+    window.fetch(json["_links"].unsafeCast<Json>()["author"].unsafeCast<Json>()["href"]).await()
+        .json()
+        .await().unsafeCast<User>(),
+    content = json["content"].unsafeCast<String>(),
+    title = json["title"].unsafeCast<String>(),
+    headline = json["headline"].unsafeCast<String>(),
+    slug = json["headline"].unsafeCast<String>(),
+    id = json["id"].unsafeCast<Int>(),
+    addedAt = json["addedAt"].unsafeCast<Date>()
+)
+
 suspend fun fetchArticles(): List<Article> = coroutineScope {
-    val response = window.fetch("http://localhost:8080/api/articles/all")
-        .await()
-    val forOFor: Short = 404
-    if (response.unsafeCast<Response>().status == forOFor) {
-        return null
-    }
+    val response = window.fetch("http://localhost:8080/api/articles/all").await()
     val json = response.json()
         .await().unsafeCast<Json>()
-    return Article(
-        author =
-        window.fetch(json["_links"].unsafeCast<Json>()["author"].unsafeCast<Json>()["href"]).await()
-            .json()
-            .await().unsafeCast<User>(),
-        content = json["content"].unsafeCast<String>(),
-        title = json["title"].unsafeCast<String>(),
-        headline = json["headline"].unsafeCast<String>(),
-        slug = json["headline"].unsafeCast<String>(),
-        id = json["id"].unsafeCast<Int>(),
-        addedAt = json["addedAt"].unsafeCast<Date>()
-    )
+    return json['articles'].unsafeCast<List<Json>>().map{ get_article_from_json(it) }
 }
 
 external interface AppState : RState {
